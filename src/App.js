@@ -1,26 +1,83 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    
+  
+    this.state = {
+    text: '',
+    isClicked: false,
+    todos: [],
+    }
+    this.delTodo = this.delTodo.bind(this);
+  };
+  
+    
+  
+
+  // Delete Todos
+  delTodo(name, i){
+    let todos = this.state.todos.slice()
+    todos[i] = ' '
+    document.getElementsByClassName("todoItem").style.display ='none';
+    this.setState({
+        todos,
+        
+    });
+    
+}
+  // Add todos ; handle isClicked
+  handleClick = () => {
+    let isClicked = !this.state.isClicked
+    let newTodo = this.state.text
+    this.setState({
+      isClicked,
+      todos: [...this.state.todos, newTodo],
+      text: ''
+    })
+  }
+  // update state {text} after each input
+  onChange = e => {
+    this.setState({
+      text: e.target.value
+    })
+  }
+
+  render() {
+    return (
+
+      <div style={{"display": "flex", "position":"fixed"}}>
+        <h1>Input Text Below</h1>
+        <input value={this.state.text} onChange={this.onChange} />
+        <button style={btnStyle} onClick={this.handleClick}>Create To-Do</button>
+     {this.state.todos.map((todos, i) => (
+         <p className='todoItem' style={{"display":"flex", "flex-wrap": "wrap" }}>
+          <label>
+        <input  type="checkbox" class="strikethrough"/> {' '}
+        <span>{todos}</span>
+        </label>
+        <button  style={btnStyle} onClick={() => { this.delTodo(todos, i)}} key={i}>delete</button>
+        </p> 
+        ))}
+     
+        
+        </div>
+
+    );
+  }
+}
+
+
+const btnStyle = {
+  background: '#ff0000',
+  color: '#fff',
+  border: 'none',
+  padding: '5px 9px',
+  borderRadius: '50%',
+  cursor: 'pointer',
+  
 }
 
 export default App;
