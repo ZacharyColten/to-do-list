@@ -4,30 +4,23 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
-    
-  
+
     this.state = {
-    text: '',
-    isClicked: false,
-    todos: [],
+      text: '',
+      isClicked: false,
+      todos: [],
     }
     this.delTodo = this.delTodo.bind(this);
   };
-  
-    
-  
 
   // Delete Todos
-  delTodo(name, i){
+  delTodo(name, i) {
     let todos = this.state.todos.slice()
-    todos[i] = ' '
-    document.getElementsByClassName("todoItem").style.display ='none';
+    document.getElementsByClassName('todoItem')[i].style.display = 'none'
     this.setState({
-        todos,
-        
+      todos,
     });
-    
-}
+  }
   // Add todos ; handle isClicked
   handleClick = () => {
     let isClicked = !this.state.isClicked
@@ -47,28 +40,23 @@ class App extends Component {
 
   render() {
     return (
-
-      <div style={{"display": "flex", "position":"fixed"}}>
-        <h1>Input Text Below</h1>
-        <input value={this.state.text} onChange={this.onChange} />
+      <div style={{ "display": "flex", "position": "fixed", "flex-wrap": "wrap" }}>
+        <p>Create To-Do items. You can cross them out and delete them.</p>
+        <textarea value={this.state.text} onChange={this.onChange}></textarea>
         <button style={btnStyle} onClick={this.handleClick}>Create To-Do</button>
-     {this.state.todos.map((todos, i) => (
-         <p className='todoItem' style={{"display":"flex", "flex-wrap": "wrap" }}>
-          <label>
-        <input  type="checkbox" class="strikethrough"/> {' '}
-        <span>{todos}</span>
-        </label>
-        <button  style={btnStyle} onClick={() => { this.delTodo(todos, i)}} key={i}>delete</button>
-        </p> 
+        {this.state.todos.map((todos, i) => (
+          <p className="todoItem" style={{ "display": "flex", "flex-wrap": "wrap" }}>
+            <label>
+              <input type="checkbox" class="strikethrough" /> {' '}
+              <span>{todos}</span>
+            </label>
+            <button style={btnStyle} onClick={() => { this.delTodo(todos, i) }} key={i}>delete</button>
+          </p>
         ))}
-     
-        
-        </div>
-
+      </div>
     );
   }
 }
-
 
 const btnStyle = {
   background: '#ff0000',
@@ -76,8 +64,7 @@ const btnStyle = {
   border: 'none',
   padding: '5px 9px',
   borderRadius: '50%',
-  cursor: 'pointer',
-  
+  cursor: 'pointer'
 }
 
 export default App;
