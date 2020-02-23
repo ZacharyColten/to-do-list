@@ -16,6 +16,7 @@ class App extends Component {
   // Delete Todos
   delTodo(name, i) {
     let todos = this.state.todos.slice()
+    todos[i] = ' '
     document.getElementsByClassName('todoItem')[i].style.display = 'none'
     this.setState({
       todos,
